@@ -63,7 +63,7 @@ public class Robot extends TimedRobot {
   private static final String n2ewd = "Top Dropper Backup";
   private static final String led1l = "climb";
   private static final String speed = "Drive Speed Foreward/back";
-  private static final String leftFrontmt = "Left Front Motor";
+  private static final String leftFrontmt1 = "Left Front Motor";
   private static final String leftRearmt = "Left Rear Motor";
   private static final String rightFrontmt = "Right Front Motor";
   private static final String rightRearmt = "Right Rear Motor";
