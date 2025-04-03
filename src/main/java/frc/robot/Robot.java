@@ -76,6 +76,7 @@ private static final String leftdd = "leftDistance";
 private static final String rightdd = "rightDistance";
   private static final String good = "good";
   private static final String climeee = "climbAngle";
+  private static final String reset = "Reset";
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
   private final PWMSparkMax ledrr = new PWMSparkMax(1);
@@ -102,6 +103,7 @@ private static final String rightdd = "rightDistance";
   double driveLimit = 1;
   double launchPower = 0;
   double feedPower = 0;
+  boolean sw;
   
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -115,7 +117,7 @@ private static final String rightdd = "rightDistance";
     SmartDashboard.putData("Auto choices", m_chooser);
     m_chooser.addOption("long back up and score", auto);
     SmartDashboard.putBoolean(motoron, false);
-    
+    SmartDashboard.putBoolean(reset, false);
    
   }
 
@@ -145,10 +147,22 @@ private static final String rightdd = "rightDistance";
     SmartDashboard.putNumber(n2ewd, n2ew.getAppliedOutput());
     double hedr = gyro.getAngle();
     SmartDashboard.putNumber(Heading, hedr);
-    
+    sw = SmartDashboard.getBoolean(reset,false);
     SmartDashboard.putNumber(leftdd, leftFront.getEncoder().getPosition()/5);
     SmartDashboard.putNumber(rightdd,rightFront.getEncoder().getPosition()/5);
     SmartDashboard.putNumber(climeee,clime.getEncoder().getPosition());
+    if(sw == true){
+    gyro.reset();
+    clime.getEncoder().setPosition(0);
+    leftFront.getEncoder().setPosition(0);
+    rightFront.getEncoder().setPosition(0);
+    sw =false;
+    SmartDashboard.putBoolean(reset, sw);
+  }
+
+    else if (sw == false)  {
+      
+    }
   }
 
  
@@ -177,18 +191,26 @@ private static final String rightdd = "rightDistance";
   public void autonomousPeriodic() {
     switch (m_autoSelected) {
       case kRedLongAuto:
-        if(timer1.get() < 2.6) { //spool up the launch wheel
-         myDrive.tankDrive(.505,.5);
+        if(timer1.get() < 5) { //spool up the launch wheel
+         myDrive.tankDrive(.3,.31);
          timer1.start();
         }
-        else if(timer1.get() < 4){
-myDrive.tankDrive(0,0);
-         n1ew.set(.2);
+        else if(timer1.get() < 7){
+myDrive.tankDrive(6,6);
+         n1ew.set(0);
          SmartDashboard.putBoolean(motoron, true);
         }
-        else {
-          n1ew.set(0);
-        }
+        else if(timer1.get() < 9){
+          myDrive.tankDrive(0,0);
+                   n1ew.set(.1);
+                   n2ew.set(.1);
+                   SmartDashboard.putBoolean(motoron, true);
+                  }
+                  else {
+                    n1ew.set(.0);
+                    n2ew.set(.0);
+                  }
+         
         break;
         case auto:
         if(timer1.get() < 11 ){
