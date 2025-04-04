@@ -340,9 +340,9 @@ lock.set(-1);
       driveLimit = 1;
     }
     else if(driverController.getRawButton(5)) {
-      driveLimit = .4;
+      driveLimit = .7;
     }
-    myDrive.arcadeDrive(-driverController.getRawAxis(1)*driveLimit, -driverController.getRawAxis(2)*driverController.getRawAxis(3)*driverController.getRawAxis(3));
+    myDrive.arcadeDrive(-driverController.getRawAxis(1)*driveLimit, -driverController.getRawAxis(2)*driverController.getRawAxis(3));
 
     //launcher code here
     if(operatorController.getRawButton(1)) {
